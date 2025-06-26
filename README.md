@@ -1,23 +1,44 @@
-# LCD Amin Project Setup (No venv)
+# I-Repair Inventory Management
+
+A simple inventory management system for LCDs, batteries, and backs, built with Flask and SQLite. Includes CSV import/export, dark mode, and automatic database backups.
+
+## Features
+- Manage inventory for LCDs, batteries, and backs
+- Add, edit, delete, and search items
+- Import/export inventory as CSV
+- Toggle buy price visibility (password protected)
+- Dark mode support
+- Automatic database backups every 5 minutes (max 10 backups)
 
 ## Requirements
-- Python 3.x (system-wide, not a virtual environment)
-- Packages: flask, openpyxl
+- Python 3.x
+- Flask
+- openpyxl
 
-## Install dependencies globally
-Open PowerShell and run:
+## Installation
+Install dependencies globally (no virtual environment required):
 
-    python -m pip install flask openpyxl
+```powershell
+python -m pip install flask openpyxl
+```
 
-## Running the App
-From your project directory, run:
+## Usage
+Run the app from your project directory:
 
-    python app.py
+```powershell
+python app.py
+```
+
+Then open your browser and go to: [http://localhost:5000](http://localhost:5000)
 
 ## Notes
-- You do NOT need to create or activate a virtual environment.
+- No need to create or activate a virtual environment.
 - If you previously created a `.venv` folder, you can delete it:
+  ```powershell
+  Remove-Item -Recurse -Force .venv
+  ```
+- All dependencies are installed globally for your system Python.
+- Backups are stored in the `backups/` folder and rotated automatically.
 
-      Remove-Item -Recurse -Force .venv
-
-- All dependencies will be installed globally for your system Python.
+## License
+This project is provided as-is for educational and internal use.
