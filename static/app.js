@@ -329,6 +329,46 @@ function exportOutOfStockCSV() {
 }
 document.getElementById('export-outofstock-btn').onclick = exportOutOfStockCSV;
 
+// ===================== EXPORT ALL INVENTORY =====================
+function exportAllInventoryCSV() {
+  const table = document.getElementById('lcd-table');
+  let csv = [];
+  // Add header row
+  let headerRow = [];
+  for (let i = 0; i < table.rows[0].cells.length; i++) {
+    headerRow.push('"' + table.rows[0].cells[i].innerText.replace(/"/g, '""') + '"');
+  }
+  csv.push(headerRow.join(','));
+  // Add data rows
+  for (let r = 1; r < table.rows.length; r++) {
+    let row = table.rows[r];
+    let rowData = [];
+    for (let i = 0; i < row.cells.length; i++) {
+      let cell = row.cells[i];
+      if (cell.classList.contains('buy-price-column') && !buyPricesVisible) {
+        rowData.push('"0"');
+      } else {
+        rowData.push('"' + cell.innerText.replace(/"/g, '""') + '"');
+      }
+    }
+    csv.push(rowData.join(','));
+  }
+  const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentCategory}_all_inventory.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+}
+// Attach to button if present
+const exportAllBtn = document.getElementById('export-all-btn');
+if (exportAllBtn) {
+  exportAllBtn.onclick = exportAllInventoryCSV;
+}
+
 // ===================== DARK MODE =====================
 document.getElementById('dark-mode-btn').addEventListener('click', function () {
   document.body.classList.toggle('dark-mode');
