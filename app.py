@@ -1,8 +1,19 @@
 from flask import Flask, g, render_template, request, jsonify
 import sqlite3
+import os
+import shutil
+import threading
+import time
+import hashlib
+from datetime import datetime
 
 app = Flask(__name__)
 DATABASE = 'inventory.db'
+
+BACKUP_DIR = os.path.join(os.path.dirname(__file__), 'backups')
+DB_PATH = os.path.join(os.path.dirname(__file__), DATABASE)
+MAX_BACKUPS = 10
+BACKUP_INTERVAL_SECONDS = 5 * 60  # 5 minutes
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -94,6 +105,39 @@ def update_or_delete_item(category, id):
     db.execute(f'DELETE FROM {table} WHERE id = ?', (id,))
     db.commit()
     return ('', 204)
+
+def create_backup():
+    os.makedirs(BACKUP_DIR, exist_ok=True)
+    # Read the database file and hash its contents
+    with open(DB_PATH, 'rb') as f:
+        db_bytes = f.read()
+        db_hash = hashlib.sha256(db_bytes).hexdigest()[:16]
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    backup_filename = f'inventory_backup_{timestamp}_{db_hash}.db'
+    dst = os.path.join(BACKUP_DIR, backup_filename)
+    # Only create backup if a file with this hash does not already exist
+    if not any(db_hash in fname for fname in os.listdir(BACKUP_DIR)):
+        with open(dst, 'wb') as out:
+            out.write(db_bytes)
+    # Remove old backups if more than MAX_BACKUPS
+    backups = sorted([f for f in os.listdir(BACKUP_DIR) if f.startswith('inventory_backup_') and f.endswith('.db')])
+    while len(backups) > MAX_BACKUPS:
+        os.remove(os.path.join(BACKUP_DIR, backups.pop(0)))
+
+def backup_scheduler():
+    while True:
+        time.sleep(BACKUP_INTERVAL_SECONDS)
+        create_backup()
+
+def start_backup_thread():
+    # Create a backup at launch
+    create_backup()
+    # Start background thread for periodic backups
+    t = threading.Thread(target=backup_scheduler, daemon=True)
+    t.start()
+
+# Call backup thread starter at app startup
+start_backup_thread()
 
 # Register unique view functions
 for cat in ['lcd', 'battery', 'back']:
