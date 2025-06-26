@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="https://www.favicon.cc/favicon/108/972/favicon.png" type="image/png">
+  <title>📦 I-Repair Inventory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <h1>📦 I-Repair Inventory</h1>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <select id="category-select" class="nav-select">
+        <option value="lcd" selected>LCD</option>
+        <option value="battery">Battery</option>
+        <option value="back">Phone Back</option>
+      </select>
+      <input id="search-input" placeholder="🔍 Search models or manufacturer" class="nav-search" />
+    </div>
+    <div class="navbar-right">
+      <button id="add-btn">➕ Add New</button>
+      <button id="toggle-buy-price">👁️ Show Buy Prices</button>
+      <button id="export-outofstock-btn">⬇️ Export</button>
+      <button id="import-csv-btn">⬆️ Import</button>
+      <button id="dark-mode-btn">🌙 Dark Mode</button>
+    </div>
+  </nav>
+
+  <div id="lcd-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" id="modal-close">&times;</span>
+      <h2 id="modal-title">Add/Edit Item</h2>
+      <form id="lcd-form">
+        <input type="hidden" id="lcd-id" />
+        <label>Manufacturer:<input type="text" id="manufacturer-input" required /></label><br />
+        <label>Model:<input type="text" id="model-input" required /></label><br />
+        <label>Buy Price (DT):<input type="number" id="buy-price-input" step="0.5" min="0" required
+            value="0" /></label><br />
+        <label>Sell Price (DT):<input type="number" id="sell-price-input" step="0.5" min="0" required
+            value="1" /></label><br />
+        <label>Qty:<input type="number" id="qty-input" min="0" required value="1" /></label><br />
+        <button type="submit" id="form-submit-btn">Save</button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div id="lcd-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" id="modal-close">&times;</span>
+      <h2 id="modal-title">Add/Edit LCD</h2>
+      <form id="lcd-form">
+        <input type="hidden" id="lcd-id" />
+        <label>Manufacturer:<input type="text" id="manufacturer-input" required /></label><br />
+        <label>Model:<input type="text" id="model-input" required /></label><br />
+        <label>Buy Price (DT):<input type="number" id="buy-price-input" step="0.5" min="0" required /></label><br />
+        <label>Sell Price (DT):<input type="number" id="sell-price-input" step="0.5" min="0" required /></label><br />
+        <label>Qty:<input type="number" id="qty-input" min="0" required /></label><br />
+        <button type="submit" id="form-submit-btn">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-box">
+      <h2>📗 All Inventory</h2>
+      <table id="lcd-table">
+        <thead>
+          <tr>
+            <th class="sortable" data-sort="id">ID</th>
+            <th class="sortable" data-sort="manufacturer">Manufacturer</th>
+            <th class="sortable" data-sort="model">Model</th>
+            <th class="buy-price-column sortable" data-sort="buy_price">Buy Price</th>
+            <th class="sell-price-column sortable" data-sort="sell_price">Sell Price</th>
+            <th class="sortable" data-sort="qty">Qty</th>
+            <th style="text-align: center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="table-box">
+      <h2>📕 Out of Stock</h2>
+
+      <table id="out-of-stock-table">
+        <thead>
+          <tr>
+            <th class="sortable" data-sort="id">ID</th>
+            <th class="sortable" data-sort="manufacturer">Manufacturer</th>
+            <th class="sortable" data-sort="model">Model</th>
+            <th class="buy-price-column sortable" data-sort="buy_price">Buy Price</th>
+            <th class="sell-price-column sortable" data-sort="sell_price">Sell Price</th>
+            <th class="sortable" data-sort="qty">Qty</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/static/app.js"> </script>
+  <footer>
+    <p>&copy; 2025 I-Repair Inventory Manager — Powered by Shadow</p>
+  </footer>
+</body>
+
+</html>
