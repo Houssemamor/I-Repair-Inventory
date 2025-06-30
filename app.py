@@ -34,7 +34,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS lcd (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         manufacturer TEXT,
-        model TEXT UNIQUE,
+        model TEXT,
         buy_price REAL DEFAULT 0.0,
         sell_price REAL DEFAULT 0.0,
         quantity INTEGER DEFAULT 0
@@ -42,7 +42,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS battery (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         manufacturer TEXT,
-        model TEXT UNIQUE,
+        model TEXT,
         buy_price REAL DEFAULT 0.0,
         sell_price REAL DEFAULT 0.0,
         quantity INTEGER DEFAULT 0
@@ -50,7 +50,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS back (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         manufacturer TEXT,
-        model TEXT UNIQUE,
+        model TEXT,
         buy_price REAL DEFAULT 0.0,
         sell_price REAL DEFAULT 0.0,
         quantity INTEGER DEFAULT 0
