@@ -283,12 +283,12 @@ document.getElementById('toggle-buy-price').onclick = async () => {
     currentData = await res.json();
     document.body.classList.add('show-buy-price');
     buyPricesVisible = true;
-    btn.textContent = '🙈 Hide Buy Prices';
+    btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
     render(currentData);
   } else {
     document.body.classList.remove('show-buy-price');
     buyPricesVisible = false;
-    btn.textContent = '👁️ Show Buy Prices';
+    btn.innerHTML = '<i class="fas fa-eye"></i>';
     render(currentData);
   }
 };
@@ -374,16 +374,16 @@ document.getElementById('dark-mode-btn').addEventListener('click', function () {
   document.body.classList.toggle('dark-mode');
   if (document.body.classList.contains('dark-mode')) {
     localStorage.setItem('lcd-dark-mode', '1');
-    this.textContent = '☀️ Light Mode';
+    this.textContent = '☀️';
   } else {
     localStorage.removeItem('lcd-dark-mode');
-    this.textContent = '🌙 Dark Mode';
+    this.textContent = '🌙';
   }
 });
 if (localStorage.getItem('lcd-dark-mode')) {
   document.body.classList.add('dark-mode');
   const btn = document.getElementById('dark-mode-btn');
-  if (btn) btn.textContent = '☀️ Light Mode';
+  if (btn) btn.textContent = '☀️';
 }
 
 // ===================== IMPORT CSV =====================

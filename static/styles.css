@@ -44,41 +44,50 @@ button:not(.actions button) {
     gap: 0.5rem;
 }
 
-/* Specific Button Styles */
-#add-btn {
-    background-color: #4caf50;
-    color: white;
+.icon-button {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    border-radius: 50%; /* Make them round */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Icon size */
+    position: relative; /* Needed for text positioning */
+    background-color: #3498db; /* Example background color */
+    color: white; /* Icon color */
 }
 
-#add-btn:hover {
-    background-color: #3e8e41;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.icon-button .button-text {
+    position: absolute;
+    left: 50%;
+    top: 100%; /* Position below the button initially */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black background */
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0; /* Hide text initially */
+    transition: top 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
 }
 
-#toggle-buy-price {
-    background-color: #3498db;
-    color: white;
+.icon-button:hover .button-text {
+    top: 60px; /* Position text below the button on hover */
+    opacity: 1; /* Show text */
 }
 
-#toggle-buy-price:hover {
-    background-color: #2980b9;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+body.dark-mode .icon-button .button-text,
+body.show-buy-price .icon-button .button-text {
+    background-color: rgba(40, 40, 40, 0.95); /* Visible in both modes */
+    color: #fff;
+    z-index: 1001;
 }
 
-#export-outofstock-btn {
-    background-color: #9b59b6;
-    color: white;
-}
-
-#export-outofstock-btn:hover {
-    background-color: #8e44ad;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
+/* Table and Layout Styles */
 .table-container {
     display: flex;
     gap: 2rem;
@@ -197,18 +206,6 @@ body.dark-mode button:not(.actions button) {
     background-color: #444;
     color: #fff;
     border: 1px solid #666;
-}
-
-body.dark-mode #add-btn {
-    background-color: #388e3c;
-}
-
-body.dark-mode #toggle-buy-price {
-    background-color: #1565c0;
-}
-
-body.dark-mode #export-outofstock-btn {
-    background-color: #6c3483;
 }
 
 body.dark-mode #dark-mode-btn {
