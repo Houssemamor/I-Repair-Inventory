@@ -15,14 +15,7 @@
   <h1>📦 I-Repair Inventory</h1>
   <nav class="navbar">
     <div class="navbar-left">
-      <select id="category-select" class="nav-select">
-        <option value="lcd" selected>LCD</option>
-        <option value="battery">Battery</option>
-        <option value="back">Phone Back</option>
-      </select>
-      <input id="search-input" placeholder="🔍 Search models or manufacturer" class="nav-search" />
-    </div>
-    <div class="navbar-right">
+      <button id="toggle-outofstock-btn" class="icon-button"><i class="fas fa-table"></i> <span class="button-text">Show/Hide Out of Stock</span></button>
       <button id="add-btn" class="icon-button"><i class="fas fa-plus"></i> <span class="button-text">Add New</span>
       </button>
       <button id="toggle-buy-price" class="icon-button"><i class="fas fa-eye"></i> <span class="button-text">Show
@@ -33,7 +26,16 @@
           All Inventory</span></button>
       <button id="import-csv-btn" class="icon-button"><i class="fas fa-file-import"></i> <span class="button-text">Import</span></button>
       <button id="dark-mode-btn" class="icon-button"><i class="fas fa-moon"></i> <span class="button-text">Dark Mode</span></button>
+      <select id="category-select" class="nav-select">
+        <option value="lcd" selected>LCD</option>
+        <option value="battery">Battery</option>
+        <option value="back">Phone Back</option>
+      </select>
+      <input id="search-input" placeholder="🔍 Search models or manufacturer" class="nav-search" />
     </div>
+    <div class="navbar-right">
+      <span>Logged in as <strong>Admin</strong></span>
+      <a href="/logout" class="icon-button"><i class="fas fa-sign-out-alt"></i> <span class="button-text">Logout</span></a>
   </nav>
 
   <div id="lcd-modal" class="modal" style="display:none;">

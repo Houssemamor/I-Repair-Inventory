@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, jsonify
+from flask import Flask, g, render_template, request, jsonify, redirect, url_for, session, flash
 import sqlite3
 import os
 import shutil
@@ -8,12 +8,17 @@ import hashlib
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Change this to a secure random value
 DATABASE = 'inventory.db'
 
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), 'backups')
 DB_PATH = os.path.join(os.path.dirname(__file__), DATABASE)
 MAX_BACKUPS = 10
 BACKUP_INTERVAL_SECONDS = 5 * 60  # 5 minutes
+
+# Dummy credentials for demonstration
+USERNAME = 'amine'
+PASSWORD = '1994'
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -60,7 +65,7 @@ def init_db():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('login.html')
 
 def handle_inventory(category):
     table = category
@@ -154,6 +159,29 @@ for cat in ['lcd', 'battery', 'back']:
     app.add_url_rule(f'/api/{cat}s/secure', endpoint=f'{cat}_secure', view_func=make_secure(cat), methods=['POST'])
     app.add_url_rule(f'/api/{cat}s/<int:id>', endpoint=f'{cat}_item', view_func=make_update_delete(cat), methods=['PUT', 'DELETE'])
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == USERNAME and password == PASSWORD:
+            session['logged_in'] = True
+            return redirect(url_for('admin'))
+        else:
+            flash('Invalid credentials')
+    return render_template('login.html')
+
+@app.route('/admin')
+def admin():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    return render_template('index.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
+
 if __name__ == '__main__':
     init_db()
-    app.run(debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False)

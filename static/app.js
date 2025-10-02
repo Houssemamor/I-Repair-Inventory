@@ -8,6 +8,8 @@ const lcdForm = document.getElementById('lcd-form');
 const modalTitle = document.getElementById('modal-title');
 const formSubmitBtn = document.getElementById('form-submit-btn');
 const categorySelect = document.getElementById('category-select');
+const toggleOutOfStockBtn = document.getElementById('toggle-outofstock-btn');
+const outOfStockTableBox = document.querySelector('.table-box:nth-child(2)');
 
 // ===================== STATE VARIABLES =====================
 let currentData = [];
@@ -461,6 +463,7 @@ function importCsvData(csvText) {
     load();
   });
 }
+// ===================== Attach to button ====================
 document.getElementById('import-csv-btn').addEventListener('click', function () {
   const input = document.createElement('input');
   input.type = 'file';
@@ -480,6 +483,18 @@ document.getElementById('import-csv-btn').addEventListener('click', function () 
   input.click();
   document.body.removeChild(input);
 });
+// ===================== TOGGLE OUT-OF-STOCK TABLE =====================
+if (toggleOutOfStockBtn && outOfStockTableBox) {
+  // Hide outOfStockTableBox by default
+  outOfStockTableBox.style.display = 'none';
+  toggleOutOfStockBtn.addEventListener('click', () => {
+    if (outOfStockTableBox.style.display === 'none') {
+      outOfStockTableBox.style.display = '';
+    } else {
+      outOfStockTableBox.style.display = 'none';
+    }
+  });
+}
 
 // ===================== INIT =====================
 document.addEventListener('DOMContentLoaded', () => {
